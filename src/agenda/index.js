@@ -52,7 +52,9 @@ export default class AgendaView extends Component {
     /** initially selected day */ 
     selected: PropTypes.any, //TODO: Should be renamed 'selectedDay'
     /** Hide knob button. Default = false */
-    hideKnob: PropTypes.bool
+    hideKnob: PropTypes.bool,
+    /** Custom Props to Animated Scroll View. */
+    scrollViewProps: PropTypes.bool,
   };
 
   constructor(props) {
@@ -335,7 +337,7 @@ export default class AgendaView extends Component {
   }
 
   render() {
-    const {firstDay, hideKnob, showWeekNumbers, style, testID} = this.props;
+    const {firstDay, hideKnob, showWeekNumbers, style, scrollViewProps, testID} = this.props;
     const agendaHeight = this.initialScrollPadPosition();
     const weekDaysNames = dateutils.weekDayNames(firstDay);
     const weekdaysStyle = [
@@ -422,6 +424,7 @@ export default class AgendaView extends Component {
           onScrollBeginDrag={this.onStartDrag}
           onScrollEndDrag={this.onSnapAfterDrag}
           onScroll={Animated.event([{nativeEvent: {contentOffset: {y: this.state.scrollY}}}], {useNativeDriver: true})}
+          {...scrollViewProps}
         >
           <View
             testID={AGENDA_CALENDAR_KNOB}
